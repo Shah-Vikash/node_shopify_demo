@@ -10,7 +10,7 @@ var shopifyAPI = require('shopify-node-api');
 
 
 const apiKey = process.env.SHOPIFY_API_KEY;
-const apiSecret = 'ae7a26ea11c793ae33b50a71f23c4d28';
+const apiSecret = process.env.SHOPIFY_API_SECRET;
 const scopes = 'read_products,write_products';
 const forwardingAddress = "http://8bfc3ec3.ngrok.io"; // Replace this with your HTTPS Forwarding address
 
@@ -92,8 +92,8 @@ request.post(accessTokenRequestUrl, { json: accessTokenPayload })
     console.log(accessToken+"toek n")
     Shopify = new shopifyAPI({
         shop: 'demo-Store-react.myshopify.com', // MYSHOP.myshopify.com
-        shopify_api_key: 'a038d35e215057d66c8032df6786fc35', // Your API key
-        shopify_shared_secret: 'ae7a26ea11c793ae33b50a71f23c4d28', // Your Shared Secret
+        shopify_api_key: process.env.SHOPIFY_API_KEY, // Your API key
+        shopify_shared_secret: process.env.SHOPIFY_API_SECRET, // Your Shared Secret
         access_token: accessToken, //permanent token
       });
       res.redirect('http://localhost:8000/products');
@@ -125,24 +125,24 @@ app.get('/products', function(req, res){
     //     res.send(data)
     //   });
        
-    //   Shopify.get('/admin/products.json', function(err, data, headers){
-    //     res.status(200).json(data)
-    //   });
+      Shopify.get('/admin/products.json', function(err, data, headers){
+        res.status(200).json(data)
+      });
       
     // Shopify.delete('/admin/products/3772117352501.json', function(err, data, headers){
     //     console.log(data);
     //   });
 
-    var put_data = {
-        "product": {
-            "vendor": "demo-Store-react"
-        }
-      }
+    // var put_data = {
+    //     "product": {
+    //         "vendor": "demo-Store-react"
+    //     }
+    //   }
        
-      Shopify.put('/admin/products/3772147564597.json', put_data, function(err, data, headers){
-        console.log(data);
-        res.send(data)
-      });
+    //   Shopify.put('/admin/products/3772147564597.json', put_data, function(err, data, headers){
+    //     console.log(data);
+    //     res.send(data)
+    //   });
     // Shopify.get('/admin/products.json', function(err, data, headers){
     //     res.status(200).json(data)
     //   });
